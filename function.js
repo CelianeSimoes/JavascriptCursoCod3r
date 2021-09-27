@@ -94,9 +94,94 @@ const carrinho = [
 // criar 2 funções de mapeamento - microdesafio
 
 const getNome = item => item.nome
-console.log (carrino.map(getNome))
+console.log (carrinho.map(getNome))
 
 const getTotalValorPorItem = item => item.qtde * item.preco
 const total = carrinho.map(getTotalValorPorItem)
 console.log(getTotalValorPorItem);
 
+//função Map implementada
+Array.prototype.meuMap = function(fn){
+    const mapped = []
+    for (let i=0; i< this.length; i++){
+        const resultado =fn(this[i],i,this)
+        novoArray.push(resultado)
+    }
+    return novoArray
+}
+const getNome = item => item.nome
+console.log (carrinho.meuMap(getNome))
+
+const getTotalValorPorItem = item => item.qtde * item.preco
+const total = carrinho.meuMap(getTotalValorPorItem)
+console.log(getTotalValorPorItem);
+
+//20/09/2021
+// DESAFIO #1
+
+// FAZER UM PROGRAMA COM UMA FUNÇÃO PARA SOMAR 
+//somar (3)(4)(5)
+
+function somar(a){
+    return function(b){
+        return function (c){
+            return a+b+c
+        }
+    }
+}
+const somarAB = somar (3)(4)
+console.log(somarAB(13))
+console.log (somar(13)(21)(50))
+
+// SEGUNDA PARTE DO DESAFIO - CALCULAR
+//fn ->3*7
+//fn ->3+7
+//fn ->3-7
+// calcular (3)(7)(fn)
+
+function calcular(x){
+    return function (y){
+        return function (fn){
+            return fn (x,y)
+        }
+   }
+}
+function subtrair (a,b){
+    return a-b
+}
+
+function multiplicar (a,b){
+    return a*b
+}
+const resultado1 = calcular(10)(5)(subtrair)
+console.log (resultado1)
+const resultado2 = calcular(10)(5)(multiplicar)
+console.log (resultado2)
+// aula27/09
+
+//Conceito função FILTER
+//SINTAXE = array.filter(fn)
+
+//CallBack #4
+
+const carrinho = [
+    {nome:'Caneta', qtde: 10, preco:7.99},
+    {nome:'Impressora', qtde: 0, preco:649.50},
+    {nome:'Caderno', qtde: 4, preco:27.99},
+    {nome:'Lapis', qtde: 3, preco:5.82},
+    {nome:'Tesoura', qtde: 1, preco:19.20},
+]
+
+const qtdeMaiorQueZero = item => item.qtde > 0
+
+const itensValidos = carrinho.filter(qtdeMaiorQueZero)
+
+console.log (itensValidos)
+
+//associando Map e Filter
+
+const nomeItensValidos = carrinho
+.filter(qtdeMaiorQueZero)
+.map(getNome)
+
+console.log(nomeItensValidos)
